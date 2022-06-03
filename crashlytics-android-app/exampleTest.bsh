@@ -1,0 +1,57 @@
+#!/bin/bash
+# EXAMPLE E2E CRASHLYTICS TESTING SCRIPT
+#
+# This script demonstrates how to use Crashapp's Gradle project properties
+# to override runtime behavior to  test the app.
+#
+# In each loop over the three different AUTOCRASH_TYPE values, the app will be
+# compiled to automatically cause a specific types of fatal crash. Then the
+# app will be launched, and the script will wait a few seconds to let the
+# crash occur and be reported to Crashlytics.
+#
+# Upon conclusion of the script execution, there should be 3 new crashes in
+# the console for the appropriate versionCodeSuffix
+#
+# This script can be modified to test a wide variety of configurations.
+
+
+if [ $# -eq 0 ]
+  then
+    echo "Usage: $0 versionCodeSuffix"
+    exit 1
+fi
+
+VERSION_CODE_SUFFIX="${1}"
+if [ ${#VERSION_CODE_SUFFIX} -ne 3 ]; then
+    echo "versionCodeSuffix must be exactly 3 digits"
+    exit 1
+fi
+
+# echo future commands to console (helpful for debugging and monitoring status)
+set -x
+
+# Uninstall the app, if it is on the device
+adb uninstall com.example.crashlytics.crashapp
+
+# For subsequent commands, fail the script immediately on any error
+set -e
+
+AUTOCRASH_TYPES=(APPLICATION_ONCREATE ACTIVITY_ONCREATE BACKGROUND)
+
+for crashType in "${AUTOCRASH_TYPES[@]}"
+do
+
+  ./gradlew \
+    -Pcrashapp_runtime_autoCrash="\"${crashType}\"" \
+    -Pcrashapp_versionCodeSuffix=$VERSION_CODE_SUFFIX \
+    app:assembleDebug app:installDebug
+
+  # launch the app
+  adb shell monkey -p com.example.crashlytics.crashapp -c android.intent.category.LAUNCHER 1
+
+  # delay the next loop, so the app can finish launching and Firelog has time to send
+  sleep 10
+done
+
+# Launch app one more time, to ensure the queue gets flushed
+adb shell monkey -p com.example.crashlytics.crashapp -c android.intent.category.LAUNCHER 1

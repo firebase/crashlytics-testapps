@@ -1,0 +1,54 @@
+plugins {
+    id 'com.android.application'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
+}
+
+android {
+    compileSdk project.crashapp_compileSdk.toInteger()
+
+    defaultConfig {
+        applicationId "com.example.crashlytics.crashapp"
+        minSdk project.crashapp_minSdk.toInteger()
+        targetSdk project.crashapp_targetSdk.toInteger()
+        versionCode = (project.crashapp_versionCodePrefix + project.crashapp_versionCodeSuffix).toInteger()
+        versionName project.crashapp_versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        // Crashapp runtime configuration toggleable via the command line or ../gradle.properties.
+        buildConfigField "String", "CRASHAPP_AUTOCRASH", project.crashapp_runtime_autoCrash
+        buildConfigField "String", "CRASHAPP_LOG_EXCEPTION", project.crashapp_runtime_logException
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled project.crashapp_minifyDebug.toBoolean()
+        }
+
+        release {
+            minifyEnabled project.crashapp_minifyRelease.toBoolean()
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+    implementation "com.google.firebase:firebase-crashlytics:$crashapp_crashlyticsSdkVersion"
+
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'com.google.android.material:material:1.6.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.navigation:navigation-fragment:2.4.2'
+    implementation 'androidx.navigation:navigation-ui:2.4.2'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+}

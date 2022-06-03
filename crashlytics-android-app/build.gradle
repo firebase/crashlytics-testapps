@@ -1,0 +1,20 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        google()
+    }
+    dependencies {
+        classpath "com.google.gms:google-services:${crashapp_gmsPluginVersion}"
+        classpath "com.google.firebase:firebase-crashlytics-gradle:${crashapp_crashlyticsPluginVersion}"
+    }
+}
+
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+plugins {
+    id 'com.android.application' version '7.1.1' apply false
+    id 'com.android.library' version "${crashapp_androidPluginVersion}" apply false
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

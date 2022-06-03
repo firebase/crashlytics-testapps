@@ -1,0 +1,12 @@
+package com.example.crashlytics.crashapp;
+
+public interface ConfigConstants {
+
+  String KEY_AUTOCRASH = "CRASHAPP_AUTOCRASH";
+
+  String AUTOCRASH_NONE = "NONE";
+  String AUTOCRASH_BACKGROUND = "BACKGROUND";
+  String AUTOCRASH_ACTIVITY_ONCREATE = "ACTIVITY_ONCREATE";
+  String AUTOCRASH_APPLICATION_ONCREATE = "APPLICATION_ONCREATE";
+
+}
