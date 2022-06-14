@@ -26,23 +26,11 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@id/textview_first" />
 
-  <!--
-  <Button
-      android:id="@+id/button_first"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="@string/next"
-      app:layout_constraintBottom_toBottomOf="@id/btn_crashBackgroundThread"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/textview_first" />
-      -->
-
   <TextView
       android:id="@+id/textview_first"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="@string/hello_first_fragment"
+      android:text="Hello, Crashlytics"
       app:layout_constraintBottom_toTopOf="@id/btn_crashMainThread"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
