@@ -27,6 +27,7 @@ import com.example.crashlytics.crashapp.databinding.ActivityMainBinding;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
+    FirebaseCrashlytics.getInstance().setCustomKey("_githash", getString(R.string.com_google_firebase_githash));
 
     if (BuildConfig.CRASHAPP_AUTOCRASH.equals(ConfigConstants.AUTOCRASH_ACTIVITY_ONCREATE)) {
       Log.d(MyApplication.LOGTAG, "Activity#onCreate crash initiated from BuildConfig");

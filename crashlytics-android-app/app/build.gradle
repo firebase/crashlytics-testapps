@@ -24,6 +24,9 @@ android {
     compileSdk project.crashapp_compileSdk.toInteger()
 
     defaultConfig {
+
+        resValue("string", "com_google_firebase_githash", "git rev-parse HEAD".execute().text.trim())
+
         applicationId "com.example.crashlytics.crashapp"
         minSdk project.crashapp_minSdk.toInteger()
         targetSdk project.crashapp_targetSdk.toInteger()
