@@ -18,6 +18,8 @@ plugins {
     id 'com.google.firebase.crashlytics'
 }
 
+apply from: new File('../signing_common.gradle')
+
 android {
     compileSdk project.crashapp_compileSdk.toInteger()
 
@@ -43,6 +45,8 @@ android {
         release {
             minifyEnabled project.crashapp_minifyRelease.toBoolean()
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            debuggable false
         }
     }
     compileOptions {

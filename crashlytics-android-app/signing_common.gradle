@@ -1,0 +1,15 @@
+android {
+    signingConfigs {
+        release {
+            storeFile file("${project.rootDir}/keystore.ks")
+            storePassword "password"
+            keyAlias "release"
+            keyPassword "password"
+        }
+    }
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+        }
+    }
+}
